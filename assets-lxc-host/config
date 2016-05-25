@@ -1,0 +1,31 @@
+# Template used to create this container: /usr/share/lxc/templates/lxc-ubuntu
+# Parameters passed to the template:
+# For additional config options, please look at lxc.container.conf(5)
+
+# Uncomment the following line to support nesting containers:
+#lxc.include = /usr/share/lxc/config/nesting.conf
+# (Be aware this has security implications)
+
+
+# Common configuration
+lxc.include = /usr/share/lxc/config/ubuntu.common.conf
+
+# Container specific configuration
+lxc.rootfs = /var/lib/lxc/tr-ubuntu/rootfs
+lxc.rootfs.backend = dir
+lxc.utsname = tr-ubuntu
+lxc.arch = amd64
+
+# Network configuration
+lxc.network.type = veth
+lxc.network.link = lxcbr0
+lxc.network.flags = up
+lxc.network.hwaddr = 00:16:3e:03:d5:db
+#lxc.network.name = inet
+
+#lxc.network.type = veth
+#lxc.network.link = lxcbr0
+#lxc.network.flags = up
+#lxc.network.hwaddr = 00:16:3e:03:d5:11
+#lxc.network.ipv4 = 192.168.10.42/24
+#lxc.network.name = eth1
