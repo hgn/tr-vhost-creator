@@ -1,6 +1,24 @@
-#!/bin/sh
+#!/bin/bash
+
+echo "$(lsb_release -is)"
+DIST="$(lsb_release -i | cut -f 2-)"
+
+install_ubuntu ()
+{
+	apt-get install lxc
+}
+
+install ()
+{
+	case $DIST in
+				 "Ubuntu")
+					 install_ubuntu
+					 ;;
+				 *)
+					 ;;
+	esac
+}
 
 
-sudo apt-get install lxc
-
-sudo lxc-checkconfig
+install
+lxc-checkconfig
