@@ -1,11 +1,15 @@
 #!/bin/bash
 
-echo "$(lsb_release -is)"
 DIST="$(lsb_release -i | cut -f 2-)"
 
 install_ubuntu ()
 {
 	apt-get install lxc
+}
+
+install_arch ()
+{
+	pacman -S community/lxc
 }
 
 install ()
@@ -14,11 +18,28 @@ install ()
 				 "Ubuntu")
 					 install_ubuntu
 					 ;;
+				 "Arch")
+					 install_arch
+					 ;;
 				 *)
 					 ;;
 	esac
 }
 
+check_env ()
+{
+	if hash lxsb_release 2>/dev/null; then
+		return
+	else
+		echo -e "lsb_release not installed, please install the program first"
+		echo -e "and call script again"
+		echo -e "On arch linux please call"
+		echo -e "\tsudo pacman -S community/lsb-release"
+		exit
+	fi
+}
 
+
+check_env
 install
 lxc-checkconfig
