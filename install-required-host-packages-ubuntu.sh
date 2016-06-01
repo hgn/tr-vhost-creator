@@ -10,6 +10,7 @@ install_ubuntu ()
 install_arch ()
 {
 	pacman -S community/lxc
+	pacman -S community/debootstrap
 }
 
 install ()
@@ -28,7 +29,7 @@ install ()
 
 check_env ()
 {
-	if hash lxsb_release 2>/dev/null; then
+	if hash lsb_release 2>/dev/null; then
 		return
 	else
 		echo -e "lsb_release not installed, please install the program first"
