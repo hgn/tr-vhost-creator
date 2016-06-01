@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo lxc-create -f assets-lxc-host/lxc-config -n tr-ubuntu -t ubuntu
+sudo lxc-create --bdev file -f assets-lxc-host/lxc-config -n tr-ubuntu -t ubuntu
 sleep 1s
 
 sudo lxc-start -n tr-ubuntu -d
