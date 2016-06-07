@@ -1,11 +1,11 @@
 #!/bin/bash
 
-echo "${BASH_SOURCE[0]}"
-
 source ./$( dirname "${BASH_SOURCE[0]}" )/../../lib.sh
 
 function usage {
-	echo -e "usage"
+	echo -e "Usage:"
+	echo -e "-c\tcreate topology"
+	echo -e "-h\tusage (this screen)"
 }
 
 function create {
@@ -17,12 +17,15 @@ while getopts "ch" opt; do
   case $opt in
     c)
 			create
+			return
     ;;
     h)
 			usage
+			return
 		;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
   esac
 done
 
+usage
