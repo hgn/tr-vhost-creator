@@ -4,15 +4,25 @@ echo "${BASH_SOURCE[0]}"
 
 source ./$( dirname "${BASH_SOURCE[0]}" )/../../lib.sh
 
-while getopts ":n:p:" opt; do
+function usage {
+	echo -e "usage"
+}
+
+function create {
+	echo -e "Create Topology"
+	./$( dirname "${BASH_SOURCE[0]}" )/../../hosts/radio-001/cmd.sh  -n "terminal01"
+}
+
+while getopts "ch" opt; do
   case $opt in
-    n) name="$OPTARG"
+    c)
+			create
     ;;
+    h)
+			usage
+		;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
   esac
 done
 
-echo -e "Generate Topology"
-
-./$( dirname "${BASH_SOURCE[0]}" )/../../hosts/radio-001/cmd.sh  -n "terminal01"
