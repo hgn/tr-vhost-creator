@@ -17,11 +17,11 @@ while getopts "ch" opt; do
   case $opt in
     c)
 			create
-			return
+			exit 0
     ;;
     h)
 			usage
-			return
+			exit 0
 		;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
@@ -29,3 +29,4 @@ while getopts "ch" opt; do
 done
 
 usage
+exit 1
