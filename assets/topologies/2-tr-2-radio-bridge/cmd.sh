@@ -5,6 +5,7 @@ source ./$( dirname "${BASH_SOURCE[0]}" )/../../lib.sh
 function usage {
 	echo -e "Usage:"
 	echo -e "-c\tcreate topology"
+	echo -e "-d\tdestroy topology"
 	echo -e "-h\tusage (this screen)"
 }
 
@@ -13,10 +14,24 @@ function create {
 	./$( dirname "${BASH_SOURCE[0]}" )/../../hosts/radio-001/cmd.sh  -n "terminal01"
 }
 
-while getopts "ch" opt; do
+function destroy {
+	echo -e "Destroy Topology"
+	sudo lxc-stop --name "terminal01"
+	sleep 1s
+	sudo lxc-destroy --name "terminal01"
+
+
+}
+
+
+while getopts "cdh" opt; do
   case $opt in
     c)
 			create
+			exit 0
+    ;;
+    d)
+			destroy
 			exit 0
     ;;
     h)
