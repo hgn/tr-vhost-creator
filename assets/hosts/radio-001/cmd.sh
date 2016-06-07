@@ -17,6 +17,5 @@ done
 echo -e "Generate image"
 echo -e "  Name:         $name"
 echo -e "  Distribution: $distribution"
-exit
 
-sudo lxc-create --bdev file -f assets-lxc-host/lxc-config -n $name -t $distribution
+sudo LANG=C LC_ALL=C lxc-create -f lxc-config -n $name -t $distribution
