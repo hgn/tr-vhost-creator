@@ -18,4 +18,4 @@ echo -e "Generate image"
 echo -e "  Name:         $name"
 echo -e "  Distribution: $distribution"
 
-sudo LANG=C LC_ALL=C lxc-create -f lxc-config -n $name -t $distribution
+sudo LANG=C LC_ALL=C lxc-create --bdev dir -f lxc-config -n $name -t $distribution
