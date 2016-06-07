@@ -2,7 +2,7 @@
 
 echo "${BASH_SOURCE[0]}"
 
-source ./$( dirname "${BASH_SOURCE[0]}" )/../lib.sh
+source ./$( dirname "${BASH_SOURCE[0]}" )/../../lib.sh
 
 while getopts ":n:p:" opt; do
   case $opt in
@@ -15,4 +15,4 @@ done
 
 echo -e "Generate Topology"
 
-./$( dirname "${BASH_SOURCE[0]}" )/../hosts/radio-001/cmd.sh  -n "terminal01"
+./$( dirname "${BASH_SOURCE[0]}" )/../../hosts/radio-001/cmd.sh  -n "terminal01"
