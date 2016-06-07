@@ -45,14 +45,14 @@ install_arch ()
 install ()
 {
 	case $DIST in
-				 "Ubuntu")
-					 install_ubuntu
-					 ;;
-				 "Arch")
-					 install_arch
-					 ;;
-				 *)
-					 ;;
+		"Ubuntu")
+			install_ubuntu
+			;;
+		"Arch")
+			install_arch
+			;;
+		*)
+			;;
 	esac
 }
 
