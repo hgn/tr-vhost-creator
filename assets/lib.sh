@@ -12,3 +12,15 @@ function randomString {
 	echo "${myRandomString:2:myStrLength}"
 }
 
+function questionYN {
+	prompt=shift
+	read -p $prompt -n 1 -r
+	echo
+	if [[ ! $REPLY =~ ^[Yy]$ ]]
+	then
+    		echo "y"
+    		return
+	fi
+	echo n
+}
+
