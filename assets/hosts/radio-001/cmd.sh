@@ -18,7 +18,8 @@ echo -e "Generate image"
 echo -e "  Name:         $name"
 echo -e "  Distribution: $distribution"
 
-sudo LC_ALL=C lxc-create --bdev dir -f $(dirname "${BASH_SOURCE[0]}")/lxc-config -n $name -t $distribution --logpriority=DEBUG --logfile $(dirname "${BASH_SOURCE[0]}")/guests.log
+sudo LC_ALL=C lxc-create --bdev dir -f $(dirname "${BASH_SOURCE[0]}")/lxc-config -n $name -t $distribution --logpriority=DEBUG --logfile $(dirname "${BASH_SOURCE[0]}")/guests.log -- -r xenial
+
 sudo lxc-start -n $name -d
 sleep 3s
 echo -e "Copy files to guest"
