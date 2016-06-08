@@ -1,0 +1,18 @@
+     lxc-create 20160607224402.406 WARN     lxc_confile - confile.c:config_pivotdir:1879 - lxc.pivotdir is ignored.  It will soon become an error.
+     lxc-create 20160607224402.408 INFO     lxc_create_ui - lxc_create.c:main:324 - container  created
+     lxc-create 20160607225549.509 WARN     lxc_confile - confile.c:config_pivotdir:1879 - lxc.pivotdir is ignored.  It will soon become an error.
+     lxc-create 20160607225549.511 INFO     lxc_create_ui - lxc_create.c:main:324 - container  created
+     lxc-create 20160607230911.386 WARN     lxc_confile - confile.c:config_pivotdir:1879 - lxc.pivotdir is ignored.  It will soon become an error.
+     lxc-create 20160607230911.387 INFO     lxc_create_ui - lxc_create.c:main:324 - container  created
+     lxc-create 20160607231655.064 WARN     lxc_confile - confile.c:config_pivotdir:1879 - lxc.pivotdir is ignored.  It will soon become an error.
+     lxc-create 20160607231655.065 INFO     lxc_create_ui - lxc_create.c:main:324 - container  created
+     lxc-create 20160607231958.324 WARN     lxc_confile - confile.c:config_pivotdir:1879 - lxc.pivotdir is ignored.  It will soon become an error.
+     lxc-create 20160607231958.325 INFO     lxc_create_ui - lxc_create.c:main:324 - container  created
+     lxc-create 20160607232205.890 WARN     lxc_confile - confile.c:config_pivotdir:1879 - lxc.pivotdir is ignored.  It will soon become an error.
+     lxc-create 20160607232205.892 INFO     lxc_create_ui - lxc_create.c:main:324 - container  created
+     lxc-create 20160607234847.614 WARN     lxc_confile - confile.c:config_pivotdir:1879 - lxc.pivotdir is ignored.  It will soon become an error.
+     lxc-create 20160607234847.615 INFO     lxc_create_ui - lxc_create.c:main:324 - container  created
+     lxc-create 20160608080151.417 WARN     lxc_confile - confile.c:config_pivotdir:1879 - lxc.pivotdir is ignored.  It will soon become an error.
+     lxc-create 20160608080151.419 INFO     lxc_create_ui - lxc_create.c:main:324 - container  created
+     lxc-create 20160608083155.650 WARN     lxc_confile - confile.c:config_pivotdir:1879 - lxc.pivotdir is ignored.  It will soon become an error.
+     lxc-create 20160608083155.652 INFO     lxc_create_ui - lxc_create.c:main:324 - container  created
