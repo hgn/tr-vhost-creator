@@ -11,7 +11,7 @@ while getopts "n:l:" opt; do
   case $opt in
     n) name="$OPTARG"
     ;;
-    n) logpath="$OPTARG"
+    l) logpath="$OPTARG"
     ;;
     \?) echo "Invalid option -$OPTARG" >&2
     ;;
@@ -29,11 +29,10 @@ sleep 3s
 
 # set ip configuration and restart container for now
 cat $(dirname "${BASH_SOURCE[0]}")/etc.network.interfaces | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/etc/network/interfaces'
+echo -e "Restarting guest to reload fresh network configuration"
 sudo lxc-stop -n $name
 sudo lxc-start -n $name -d
 sleep 3s
-
-exit
 
 # create admin account
 cat $(dirname "${BASH_SOURCE[0]}")/post-install-phase-01.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-01.sh'
