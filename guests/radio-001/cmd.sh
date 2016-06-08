@@ -27,6 +27,14 @@ sudo LC_ALL=C lxc-create --bdev dir -f $(dirname "${BASH_SOURCE[0]}")/lxc-config
 sudo lxc-start -n $name -d
 sleep 3s
 
+# set ip configuration and restart container for now
+cat $(dirname "${BASH_SOURCE[0]}")/etc.network.interfaces | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/etc/network/interfaces'
+sudo lxc-stop -n $name
+sudo lxc-start -n $name -d
+sleep 3s
+
+exit
+
 # create admin account
 cat $(dirname "${BASH_SOURCE[0]}")/post-install-phase-01.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-01.sh'
 sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-01.sh

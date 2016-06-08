@@ -24,7 +24,8 @@ function destroy() {
 }
 
 function create_bridges() {
-	addBr lxcbr5
+	addBr brtreth01
+	addBr brtrair01
 }
 
 function start() {
