@@ -36,7 +36,7 @@ function start() {
 function create() {
 	echo -e "Create Topology"
 	create_bridges
-	$(dirname "${BASH_SOURCE[0]}")/../guests/radio-001/cmd.sh  -n "terminal01" -l $logfilepath
+	$(dirname "${BASH_SOURCE[0]}")/../guests/radio-001/cmd.sh  -n "pl01tm01" -l $logfilepath
 }
 
 while getopts "csdh" opt; do
