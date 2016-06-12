@@ -11,6 +11,10 @@ iface av00 inet static
 
 auto term00
 iface term00 inet static
-	address 172.16.2.100
+	address 172.17.1.100
 	netmask 255.255.255.0
-	post-up ip route add 169.254.1.0/24 via 172.17.1.1 dev air0 || true
+  # air network
+	post-up ip route add 169.254.1.0/24 via 172.17.1.1 dev term00 || true
+
+  # neighbor specifics
+	post-up ip route add 172.16.1.0/24 via 172.17.1.1 dev term00 || true

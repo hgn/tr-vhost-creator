@@ -12,6 +12,7 @@ function usage {
 	echo -e "-c\tcreate topology"
 	echo -e "-s\tstart whole topology"
 	echo -e "-d\tdestroy topology"
+	echo -e "-p\tstop topology"
 	echo -e "-h\tusage (this screen)"
 }
 
@@ -19,13 +20,20 @@ function usage {
 function destroy() {
 	echo -e "Destroy Topology"
 
+	# platform 01
 	sudo lxc-stop --name "01t01"
+	sudo lxc-stop --name "01r01"
 	sleep 1s
 	sudo lxc-destroy --name "01t01"
+	sudo lxc-destroy --name "01r01"
 
+	# platform 02
 	sudo lxc-stop --name "02t01"
+	sudo lxc-stop --name "02r01"
 	sleep 1s
 	sudo lxc-destroy --name "02t01"
+	sudo lxc-destroy --name "02r01"
+
 }
 
 function create_bridges() {
@@ -54,6 +62,16 @@ function start() {
 	sudo lxc-ls --fancy
 }
 
+function stop() {
+	echo -e "Stop Topology"
+
+	sudo lxc-stop -n "01t01"
+	sudo lxc-stop -n "01r01"
+
+	sudo lxc-stop -n "02t01"
+	sudo lxc-stop -n "02r01"
+}
+
 function create() {
 	echo -e "Create Topology"
 	create_bridges
@@ -69,14 +87,18 @@ function create() {
 	start
 }
 
-while getopts "csdh" opt; do
+while getopts "csdhp" opt; do
   case $opt in
     c)
 			create
 			exit 0
     ;;
-    c)
+    s)
 			start
+			exit 0
+    ;;
+    p)
+			stop
 			exit 0
     ;;
     d)

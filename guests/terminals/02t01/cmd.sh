@@ -29,6 +29,7 @@ sleep 3s
 
 # set ip configuration and restart container for now
 cat $(dirname "${BASH_SOURCE[0]}")/etc.network.interfaces | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/etc/network/interfaces'
+cat $(dirname "${BASH_SOURCE[0]}")/../shared/etc.sysctl.d.60-terminal.conf | sudo lxc-attach -n  $name --clear-env -- bash -c 'cat >/etc/sysctl.d/60-terminal.conf'
 echo -e "Restarting guest to reload fresh network configuration"
 sudo lxc-stop -n $name
 sudo lxc-start -n $name -d
