@@ -30,7 +30,11 @@ function destroy() {
 
 function create_bridges() {
 	addBr br01r01t01
+	addBr br01aFFr01
+
 	addBr br02r01t01
+	addBr br02aFFr01
+
 	addBr brFFt01x01
 }
 
@@ -39,7 +43,10 @@ function start() {
 	create_bridges
 
 	sudo lxc-start -n "01t01" -d
+	sudo lxc-start -n "01r01" -d
+
 	sudo lxc-start -n "02t01" -d
+	sudo lxc-start -n "02r01" -d
 
 	# we sleed a litle bit, just that IP configuration
 	# is settled a bit
@@ -50,8 +57,14 @@ function start() {
 function create() {
 	echo -e "Create Topology"
 	create_bridges
+
+	echo -e "create terminals"
 	$(dirname "${BASH_SOURCE[0]}")/../guests/terminals/01t01/cmd.sh -n "01t01" -l $logfilepath
 	$(dirname "${BASH_SOURCE[0]}")/../guests/terminals/02t01/cmd.sh -n "02t01" -l $logfilepath
+
+	echo -e "create routers"
+	$(dirname "${BASH_SOURCE[0]}")/../guests/routers/01r01/cmd.sh -n "01r01" -l $logfilepath
+	$(dirname "${BASH_SOURCE[0]}")/../guests/routers/02r01/cmd.sh -n "02r01" -l $logfilepath
 
 	start
 }

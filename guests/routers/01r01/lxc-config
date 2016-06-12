@@ -1,0 +1,17 @@
+lxc.network.type = veth
+lxc.network.name = inet0
+lxc.network.flags = up
+lxc.network.link = lxcbr0
+lxc.network.hwaddr = 00:16:xx:xx:xx:xx
+
+lxc.network.type = veth
+lxc.network.flags = up
+lxc.network.link = br01aFFr01
+lxc.network.name = av00
+lxc.network.hwaddr = AC:BB:01:01:xx:xx
+
+lxc.network.type = veth
+lxc.network.flags = up
+lxc.network.link = br01r01t01
+lxc.network.name = term00
+lxc.network.hwaddr = AC:AA:01:01:xx:xx

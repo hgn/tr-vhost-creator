@@ -1,0 +1,16 @@
+auto lo
+iface lo inet loopback
+
+auto inet0
+iface inet0 inet dhcp
+
+auto av00
+iface av00 inet static
+	address 10.0.2.100
+	netmask 255.255.255.0
+
+auto term00
+iface term00 inet static
+	address 172.16.2.100
+	netmask 255.255.255.0
+	post-up ip route add 169.254.1.0/24 via 172.17.1.1 dev air0 || true

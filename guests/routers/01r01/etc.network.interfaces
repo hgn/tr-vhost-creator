@@ -1,0 +1,19 @@
+auto lo
+iface lo inet loopback
+
+# pseudo interface to get internet
+# during testing
+auto inet0
+iface inet0 inet dhcp
+
+
+auto av00
+iface av00 inet static
+	address 10.0.1.100
+	netmask 255.255.255.0
+
+auto term00
+iface air0 inet static
+	address 172.16.1.100
+	netmask 255.255.255.0
+	post-up ip route add 169.254.1.0/24 via 172.16.1.1 dev term00 || true

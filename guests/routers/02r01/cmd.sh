@@ -49,10 +49,10 @@ then
 	cat /etc/apt/apt.conf | sudo lxc-attach -n  $name --clear-env -- bash -c 'cat >/etc/apt/apt.conf'
 fi
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-02.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-02.sh'
-$(sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-02.sh) >$logpath 2>&1
+sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-02.sh
 
 # install local packages
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-03.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-03.sh'
-$(sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-03.sh) >$logpath 2>&1
+sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-03.sh
 
 sudo lxc-stop -n $name
