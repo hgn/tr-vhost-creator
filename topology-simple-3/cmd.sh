@@ -41,6 +41,9 @@ function start() {
 	sudo lxc-start -n "01t01" -d
 	sudo lxc-start -n "02t01" -d
 
+	# we sleed a litle bit, just that IP configuration
+	# is settled a bit
+	sleep 2
 	sudo lxc-ls --fancy
 }
 
