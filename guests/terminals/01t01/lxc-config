@@ -2,16 +2,16 @@ lxc.network.type = veth
 lxc.network.name = inet0
 lxc.network.flags = up
 lxc.network.link = lxcbr0
-lxc.network.hwaddr = 00:16:3e:xx:xx:xx
+lxc.network.hwaddr = 00:16:xx:xx:xx:xx
 
 lxc.network.type = veth
 lxc.network.flags = up
-lxc.network.link = brtreth01
+lxc.network.link = br01r01t01
 lxc.network.name = eth0
 lxc.network.hwaddr = AC:BB:01:01:xx:xx
 
 lxc.network.type = veth
 lxc.network.flags = up
-lxc.network.link = brtrair01
+lxc.network.link = brFFt01x01
 lxc.network.name = air0
 lxc.network.hwaddr = AC:AA:01:01:xx:xx

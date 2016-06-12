@@ -13,4 +13,4 @@ auto air0
 iface air0 inet static
 	address 169.254.1.1
 	netmask 255.255.255.0
-	post-up ip route add 172.16.2.0/24 via 169.254.1.2 dev air0 || true
+	post-up ip route add 172.17.1.0/24 via 169.254.1.2 dev air0 || true
