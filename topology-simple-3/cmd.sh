@@ -5,7 +5,7 @@ IP_BIN="/sbin/ip"
 
 source $( dirname "${BASH_SOURCE[0]}" )/../assets/lib.sh
 
-logfilepath=$(dirname "${BASH_SOURCE[0]}")/guests.log
+logfilepath=$(dirname "${BASH_SOURCE[0]}")/installation.log
 
 function usage {
 	echo -e "Usage:"
@@ -78,14 +78,22 @@ function create() {
 	echo -e "wait 10 seconds, CTRL-C to interrupt installation"
 	sleep 10
 
-	echo -e "Create Topology"
+	clear
+	echo -e "Create Bridges"
 	create_bridges
 
-	echo -e "create terminals"
+	# delete outdated logfiles and create file as
+	# current user id, sudo'ed environments will
+	# not help us
+	rm -rf $logfilepath
+	touch $logfilepath
+
+	echo -e "Create Topology"
+	echo -e "Create terminals"
 	$(dirname "${BASH_SOURCE[0]}")/../guests/terminals/01t01/cmd.sh -n "01t01" -l $logfilepath
 	$(dirname "${BASH_SOURCE[0]}")/../guests/terminals/02t01/cmd.sh -n "02t01" -l $logfilepath
 
-	echo -e "create routers"
+	echo -e "Create routers"
 	$(dirname "${BASH_SOURCE[0]}")/../guests/routers/01r01/cmd.sh -n "01r01" -l $logfilepath
 	$(dirname "${BASH_SOURCE[0]}")/../guests/routers/02r01/cmd.sh -n "02r01" -l $logfilepath
 
