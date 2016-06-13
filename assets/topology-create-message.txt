@@ -1,0 +1,11 @@
+Beware
+======
+
+This routine will copy your current bashrc and - if available
+/etc/apt/apt.conf in every host installation!
+
+This is required to get Internet access through proxy environments.
+If your hosts has Internet access the guests will have Internet too.
+
+Downside: password are plaintext in every installation!
+
