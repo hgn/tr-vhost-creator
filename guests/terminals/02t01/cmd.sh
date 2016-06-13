@@ -41,6 +41,7 @@ sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-01.sh
 
 # copy config files
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/vimrc | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/home/admin/.vimrc'
+cat $HOME/.bashrc | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/home/admin/.bashrc'
 
 # install required ubuntu software but first copy apt.conf
 # required if host is using a proxy and proxy is required to use
