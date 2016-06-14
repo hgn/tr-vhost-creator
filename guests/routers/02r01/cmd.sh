@@ -35,6 +35,9 @@ sudo lxc-stop -n $name
 sudo lxc-start -n $name -d
 sleep 3s
 
+sudo lxc-attach -n  $name --clear-env -- bash -c 'mkdir -p /etc/olsrd/'
+cat $(dirname "${BASH_SOURCE[0]}")/../shared/etc.olsrd.olsrd.conf | sudo lxc-attach -n  $name --clear-env -- bash -c 'cat >/etc/olsrd/olsrd.conf'
+
 # create admin account
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-01.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-01.sh'
 sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-01.sh
