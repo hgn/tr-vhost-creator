@@ -39,6 +39,9 @@ sleep 3s
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-01.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-01.sh'
 sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-01.sh
 
+# deep copy shared configuration files
+cat $(dirname "${BASH_SOURCE[0]}")/../shared/copy-files-root/etc/smcroute.conf | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/etc/smcroute.conf'
+
 # copy config files
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/vimrc | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/home/admin/.vimrc'
 cat $HOME/.bashrc | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/home/admin/.bashrc'
