@@ -43,3 +43,19 @@ function questionYN {
 	echo n
 }
 
+function lxc-exec()
+{
+	HOST=$1
+	USER=$2
+	CMD=$3
+	sudo lxc-attach -n $HOST --clear-env -- bash -c "su - $USER -c \"$CMD\""
+}
+
+function lxc-exec-root()
+{
+	HOST=$1
+	CMD=$2
+	sudo lxc-attach -n  $name --clear-env -- bash $CMD
+}
+
+

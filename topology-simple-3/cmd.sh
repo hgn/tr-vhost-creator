@@ -76,7 +76,7 @@ function create() {
 	clear
 	cat $(dirname $(dirname "${BASH_SOURCE[0]}"))/assets/topology-create-message.txt
 	echo -e "wait 10 seconds, CTRL-C to interrupt installation"
-	sleep 10
+	sleep 1
 
 	clear
 	echo -e "Create Bridges"

@@ -25,7 +25,7 @@ echo -e "  Distribution: $distribution"
 sudo LC_ALL=C lxc-create --bdev dir -f $(dirname "${BASH_SOURCE[0]}")/lxc-config -n $name -t $distribution --logpriority=DEBUG --logfile $logpath -- -r xenial
 
 sudo lxc-start -n $name -d
-sleep 3s
+sleep 2s
 
 # set ip configuration and restart container for now
 cat $(dirname "${BASH_SOURCE[0]}")/etc.network.interfaces | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/etc/network/interfaces'
@@ -33,14 +33,14 @@ cat $(dirname "${BASH_SOURCE[0]}")/../shared/etc.sysctl.d.60-router.conf | sudo 
 echo -e "Restarting guest to reload fresh network configuration"
 sudo lxc-stop -n $name
 sudo lxc-start -n $name -d
-sleep 3s
+sleep 1s
 
 sudo lxc-attach -n  $name --clear-env -- bash -c 'mkdir -p /etc/olsrd/'
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/etc.olsrd.olsrd.conf | sudo lxc-attach -n  $name --clear-env -- bash -c 'cat >/etc/olsrd/olsrd.conf'
 
 # create admin account
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-01.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-01.sh'
-sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-01.sh
+lxc-exec-root $name "/tmp/post-install-phase-01.sh"
 
 # copy config files
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/vimrc | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/home/admin/.vimrc'
@@ -53,11 +53,14 @@ if [ -f "/etc/apt/apt.conf" ]
 then
 	cat /etc/apt/apt.conf | sudo lxc-attach -n  $name --clear-env -- bash -c 'cat >/etc/apt/apt.conf'
 fi
+
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-02.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-02.sh'
-$(sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-02.sh) >$logpath 2>&1
+$(lxc-exec $name "admin" "bash /tmp/post-install-phase-02.sh") >$logpath 2>&1
+
 
 # install local packages
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-03.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-03.sh'
-$(sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-03.sh) >$logpath 2>&1
+lxc-exec $name "admin" "bash /tmp/post-install-phase-03.sh"
+#$(sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-03.sh) >$logpath 2>&1
 
 sudo lxc-stop -n $name
