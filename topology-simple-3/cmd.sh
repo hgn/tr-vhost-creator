@@ -3,9 +3,16 @@
 BRCTL_BIN="/sbin/brctl"
 IP_BIN="/sbin/ip"
 
+exec 10<>/dev/tty
+
 source $( dirname "${BASH_SOURCE[0]}" )/../assets/lib.sh
 
 logfilepath=$(dirname "${BASH_SOURCE[0]}")/installation.log
+
+function enable_silent_mode_with_log()
+{
+	exec > ${logfilepath} 2>&1
+}
 
 function usage {
 	echo -e "Usage:"
@@ -18,7 +25,7 @@ function usage {
 
 
 function destroy() {
-	echo -e "Destroy Topology"
+	echo -e "Destroy Topology" >&10
 
 	# platform 01
 	sudo lxc-stop --name "01t01"
@@ -33,7 +40,6 @@ function destroy() {
 	sleep 1s
 	sudo lxc-destroy --name "02t01"
 	sudo lxc-destroy --name "02r01"
-
 }
 
 function create_bridges() {
@@ -47,7 +53,7 @@ function create_bridges() {
 }
 
 function start() {
-	echo -e "Start Topology"
+	echo -e "Start Topology" >&10
 	create_bridges
 
 	sudo lxc-start -n "01t01" -d
@@ -63,7 +69,7 @@ function start() {
 }
 
 function stop() {
-	echo -e "Stop Topology"
+	echo -e "Stop Topology" >&10
 
 	sudo lxc-stop -n "01t01"
 	sudo lxc-stop -n "01r01"
@@ -74,12 +80,12 @@ function stop() {
 
 function create() {
 	clear
-	cat $(dirname $(dirname "${BASH_SOURCE[0]}"))/assets/topology-create-message.txt
-	echo -e "wait 10 seconds, CTRL-C to interrupt installation"
+	cat $(dirname $(dirname "${BASH_SOURCE[0]}"))/assets/topology-create-message.txt >&10
+	echo -e "wait 10 seconds, CTRL-C to interrupt installation" >&10
 	sleep 1
 
 	clear
-	echo -e "Create Bridges"
+	echo -e "Create Bridges" >&10
 	create_bridges
 
 	# delete outdated logfiles and create file as
@@ -88,44 +94,75 @@ function create() {
 	rm -rf $logfilepath
 	touch $logfilepath
 
-	echo -e "Create Topology"
-	echo -e "Create terminals"
+	echo -e "Create Topology" >&10
+	echo -e "Create Terminals Instances" >&10
 	$(dirname "${BASH_SOURCE[0]}")/../guests/terminals/01t01/cmd.sh -n "01t01" -l $logfilepath
 	$(dirname "${BASH_SOURCE[0]}")/../guests/terminals/02t01/cmd.sh -n "02t01" -l $logfilepath
 
-	echo -e "Create routers"
+	echo -e "Create Routers Instances" >&10
 	$(dirname "${BASH_SOURCE[0]}")/../guests/routers/01r01/cmd.sh -n "01r01" -l $logfilepath
 	$(dirname "${BASH_SOURCE[0]}")/../guests/routers/02r01/cmd.sh -n "02r01" -l $logfilepath
 
 	start
 }
 
-while getopts "csdhp" opt; do
+opt_verbose=false
+
+opt_create=false
+opt_start=false
+opt_stop=false
+opt_destroy=false
+
+while getopts "csdhpv" opt; do
   case $opt in
     c)
-			create
-			exit 0
+			opt_create=true
     ;;
     s)
-			start
-			exit 0
+			opt_start=true
     ;;
     p)
-			stop
-			exit 0
+			opt_stop=true
     ;;
     d)
-			destroy
-			exit 0
+			opt_destroy=true
+    ;;
+    v)
+			opt_verbose=true
     ;;
     h)
 			usage
 			exit 0
 		;;
-    \?) echo "Invalid option -$OPTARG" >&2
+    \?) echo "Invalid option -$OPTARG" >&1
     ;;
   esac
 done
+
+# fallthrough options
+if [ "$opt_verbose" = true ] ; then
+	echo ""
+else
+	enable_silent_mode_with_log
+fi
+
+# branch in modes
+if [ "$opt_create" = true ] ; then
+	create
+	exit 0
+fi
+if [ "$opt_stop" = true ] ; then
+	stop
+	exit 0
+fi
+if [ "$opt_start" = true ] ; then
+	start
+	exit 0
+fi
+if [ "$opt_destroy" = true ] ; then
+	destroy
+	exit 0
+fi
 
 usage
 exit 1

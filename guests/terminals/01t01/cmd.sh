@@ -13,7 +13,7 @@ while getopts "n:l:" opt; do
     ;;
     l) logpath="$OPTARG"
     ;;
-    \?) echo "Invalid option -$OPTARG" >&2
+    \?) echo "Invalid option -$OPTARG" >&10
     ;;
   esac
 done
@@ -54,11 +54,11 @@ then
 	cat /etc/apt/apt.conf | sudo lxc-attach -n  $name --clear-env -- bash -c 'cat >/etc/apt/apt.conf'
 fi
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-02.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-02.sh'
-ls -al $logpath
-$(sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-02.sh) > $logpath 2>&1
+lxc-exec $name "admin" "bash /tmp/post-install-phase-02.sh"
+
 
 # install local packages
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-03.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-03.sh'
-$(sudo lxc-attach -n $name --clear-env -- bash /tmp/post-install-phase-03.sh) > $logpath 2>&1
+lxc-exec $name "admin" "bash /tmp/post-install-phase-03.sh"
 
 sudo lxc-stop -n $name
