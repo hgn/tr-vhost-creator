@@ -29,14 +29,10 @@ sleep 3s
 
 # set ip configuration and restart container for now
 cat $(dirname "${BASH_SOURCE[0]}")/etc.network.interfaces | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/etc/network/interfaces'
-cat $(dirname "${BASH_SOURCE[0]}")/../shared/etc.sysctl.d.60-router.conf | sudo lxc-attach -n  $name --clear-env -- bash -c 'cat >/etc/sysctl.d/60-router.conf'
 echo -e "Restarting guest to reload fresh network configuration"
 sudo lxc-stop -n $name
 sudo lxc-start -n $name -d
 sleep 3s
-
-sudo lxc-attach -n  $name --clear-env -- bash -c 'mkdir -p /etc/olsrd/'
-cat $(dirname "${BASH_SOURCE[0]}")/../shared/etc.olsrd.olsrd.conf | sudo lxc-attach -n  $name --clear-env -- bash -c 'cat >/etc/olsrd/olsrd.conf'
 
 # create admin account
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-01.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-01.sh'

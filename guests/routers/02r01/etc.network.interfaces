@@ -1,6 +1,8 @@
 auto lo
 iface lo inet loopback
 
+# pseudo interface to get internet
+# during testing
 auto inet0
 iface inet0 inet dhcp
 
@@ -18,3 +20,6 @@ iface term00 inet static
 
   # neighbor specifics
 	post-up ip route add 172.16.1.0/24 via 172.17.1.1 dev term00 || true
+
+	# mulsticast support
+	post-up ip route add 224.0.1.0/24 dev term00 || true

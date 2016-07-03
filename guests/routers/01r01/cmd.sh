@@ -29,7 +29,6 @@ sleep 2s
 
 # set ip configuration and restart container for now
 cat $(dirname "${BASH_SOURCE[0]}")/etc.network.interfaces | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/etc/network/interfaces'
-cat $(dirname "${BASH_SOURCE[0]}")/../shared/etc.sysctl.d.60-router.conf | sudo lxc-attach -n  $name --clear-env -- bash -c 'cat >/etc/sysctl.d/60-router.conf'
 echo -e "Restarting guest to reload fresh network configuration"
 sudo lxc-stop -n $name
 sudo lxc-start -n $name -d
@@ -56,7 +55,6 @@ fi
 
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-02.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-02.sh'
 lxc-exec $name "admin" "bash /tmp/post-install-phase-02.sh"
-
 
 # install local packages
 cat $(dirname "${BASH_SOURCE[0]}")/../shared/post-install-phase-03.sh | sudo lxc-attach -n $name --clear-env -- bash -c 'cat >/tmp/post-install-phase-03.sh'
