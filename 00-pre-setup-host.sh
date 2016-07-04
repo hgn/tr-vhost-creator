@@ -4,12 +4,12 @@ DIST="$(lsb_release -i | cut -f 2-)"
 
 install_ubuntu ()
 {
-	apt-get install lxc
+	apt-get install lxc tmux
 }
 
 install_arch ()
 {
-	sudo pacman -Sy --noconfirm ebtables community/lxc community/debootstrap
+	sudo pacman -Sy --noconfirm ebtables community/lxc community/debootstrap community/tmux
 	echo -e "Change your network setup and bridge everything"
 	echo -e "sudo rm /etc/resolv.conf"
 	echo -e "sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf"
